@@ -1,18 +1,13 @@
 import { motion, useInView } from 'framer-motion'
 import {
     ArrowDown,
-    BarChart3,
     Briefcase,
     Building2,
     Calculator,
     CheckCircle2,
-    FileCheck,
     FileText,
     HeartHandshake,
-    Home,
     Landmark,
-    Network,
-    Scale,
     TrendingUp,
     Users,
     Users2
@@ -56,14 +51,9 @@ const services: Service[] = [
 
 const clientTypes: ClientType[] = [
     { name: 'Osoby fizyczne', icon: Users },
-    { name: 'Spółki z o.o.', icon: Building2 },
-    { name: 'Spółki akcyjne', icon: BarChart3 },
+    { name: 'Spółki', icon: Building2 },
     { name: 'Fundacje', icon: HeartHandshake },
     { name: 'Stowarzyszenia', icon: Users2 },
-    { name: 'Spółki jawne', icon: FileCheck },
-    { name: 'Spółki komandytowe', icon: Network },
-    { name: 'Spółki cywilne', icon: Scale },
-    { name: 'Wspólnoty mieszkaniowe', icon: Home },
     { name: 'Inne podmioty', icon: Landmark },
 ]
 
