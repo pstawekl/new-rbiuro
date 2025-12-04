@@ -9,7 +9,7 @@ const Services = () => {
     <section
       id="about"
       ref={ref}
-      className="relative py-20 md:py-32 bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 overflow-x-hidden overflow-y-auto"
+      className="relative py-20 md:py-32 bg-gradient-to-br from-blue-600 dark:from-purple-700 via-blue-500 dark:via-purple-600 to-cyan-500 dark:to-purple-500 overflow-x-hidden overflow-y-auto"
     >
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
@@ -26,7 +26,7 @@ const Services = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Nasze biuro rachunkowe jest podmiotem wyspecjalizowanym
+            Biuro rachunkowe w Zduńskiej Woli – wyspecjalizowane usługi księgowe
           </h2>
           <div className="w-24 h-1 bg-white mx-auto mb-8 rounded-full"></div>
         </motion.div>

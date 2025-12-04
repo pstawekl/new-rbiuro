@@ -1,19 +1,65 @@
 import emailjs from '@emailjs/browser'
 import { motion, useInView } from 'framer-motion'
-import L from 'leaflet'
-import 'leaflet/dist/leaflet.css'
 import { ArrowDown, Mail, MapPin, Phone, Send } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+import StructuredData from '../components/StructuredData'
 
-// Fix for default marker icon
-delete (L.Icon.Default.prototype as any)._getIconUrl
-L.Icon.Default.mergeOptions({
-    iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
-    iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
-})
+// Dynamic import for Leaflet map component - only load when needed
+const LeafletMap = lazy(() => 
+    import('react-leaflet').then(module => {
+        const { MapContainer, TileLayer, Marker, Popup } = module
+        return {
+            default: ({ position }: { position: [number, number] }) => (
+                <MapContainer
+                    center={position}
+                    zoom={20}
+                    style={{ height: '100%', width: '100%' }}
+                    className="z-0"
+                >
+                    <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <Marker position={position}>
+                        <Popup>
+                            <div className="text-center">
+                                <strong>TES - Biuro Rachunkowe</strong>
+                                <br />
+                                ul. Stefana Żeromskiego 7/9
+                                <br />
+                                98-220 Zduńska Wola
+                                <br />
+                                <small>(Wejście od ul. Przejazd)</small>
+                            </div>
+                        </Popup>
+                    </Marker>
+                </MapContainer>
+            )
+        }
+    })
+)
+
+// Load Leaflet CSS dynamically
+const loadLeafletCSS = () => {
+    if (!document.querySelector('link[href*="leaflet"]')) {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
+        document.head.appendChild(link)
+    }
+}
+
+// Fix Leaflet icons dynamically
+const setupLeafletIcons = async () => {
+    const L = await import('leaflet')
+    delete (L.default.Icon.Default.prototype as any)._getIconUrl
+    L.default.Icon.Default.mergeOptions({
+        iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
+        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+    })
+}
 
 interface ContactInfo {
     icon: React.ComponentType<{ className?: string }>
@@ -158,12 +204,19 @@ const Contact = () => {
     // Coordinates for Zduńska Wola
     const position: [number, number] = [51.601739, 18.942516]
 
+    // Load Leaflet CSS and setup icons when component mounts
+    useEffect(() => {
+        loadLeafletCSS()
+        setupLeafletIcons()
+    }, [])
+
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white dark:bg-gray-900">
+            <StructuredData />
             {/* Hero Header */}
             <section
                 ref={headerRef}
-                className="relative py-32 md:py-40 bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 overflow-x-hidden overflow-y-auto"
+                className="relative py-32 md:py-40 bg-gradient-to-br from-blue-600 dark:from-purple-700 via-blue-500 dark:via-purple-600 to-cyan-500 dark:to-purple-500 overflow-x-hidden overflow-y-auto"
             >
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-10">
@@ -249,7 +302,7 @@ const Contact = () => {
                 >
                     <motion.button
                         onClick={scrollToContactInfo}
-                        className="cursor-pointer p-3 rounded-full bg-white/20 backdrop-blur-md hover:bg-white/30 transition-colors"
+                        className="cursor-pointer p-3 rounded-full bg-white/20 dark:bg-white/10 backdrop-blur-md hover:bg-white/30 dark:hover:bg-white/20 transition-colors"
                         whileHover={{ scale: 1.2 }}
                         whileTap={{ scale: 0.9 }}
                         aria-label="Przejdź do następnej sekcji"
@@ -260,7 +313,7 @@ const Contact = () => {
             </section>
 
             {/* Contact Info Section */}
-            <section ref={contactInfoRef} className="py-20 md:py-32 bg-gradient-to-br from-blue-50 to-white relative">
+            <section ref={contactInfoRef} className="py-20 md:py-32 bg-gradient-to-br from-blue-50 dark:from-gray-800 to-white dark:to-gray-900 relative">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -268,8 +321,8 @@ const Contact = () => {
                         transition={{ duration: 0.6 }}
                         className="text-center mb-16"
                     >
-                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Informacje kontaktowe</h2>
-                        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto mt-6 rounded-full"></div>
+                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4">Informacje kontaktowe</h2>
+                        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 dark:from-purple-500 to-cyan-500 dark:to-purple-400 mx-auto mt-6 rounded-full"></div>
                     </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -283,24 +336,24 @@ const Contact = () => {
                                     transition={{ duration: 0.6, delay: index * 0.1 }}
                                     className="group"
                                 >
-                                    <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-blue-300 h-full flex flex-col items-center text-center">
+                                    <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 dark:border-gray-700 hover:border-blue-300 dark:hover:border-purple-500 h-full flex flex-col items-center text-center">
                                         <motion.div
-                                            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 text-white mb-6 shadow-lg"
+                                            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 dark:from-purple-500 to-cyan-500 dark:to-purple-400 text-white mb-6 shadow-lg"
                                             whileHover={{ scale: 1.1, rotate: 5 }}
                                             transition={{ type: 'spring', stiffness: 300 }}
                                         >
                                             <Icon className="w-8 h-8" />
                                         </motion.div>
-                                        <h3 className="text-xl font-bold text-gray-900 mb-2">{info.label}</h3>
+                                        <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">{info.label}</h3>
                                         {info.href ? (
                                             <a
                                                 href={info.href}
-                                                className="text-lg text-gray-600 hover:text-blue-600 transition-colors whitespace-pre-line"
+                                                className="text-lg text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-purple-400 transition-colors whitespace-pre-line"
                                             >
                                                 {info.value}
                                             </a>
                                         ) : (
-                                            <p className="text-lg text-gray-600 whitespace-pre-line">{info.value}</p>
+                                            <p className="text-lg text-gray-600 dark:text-gray-300 whitespace-pre-line">{info.value}</p>
                                         )}
                                     </div>
                                 </motion.div>
@@ -317,18 +370,18 @@ const Contact = () => {
                 >
                     <motion.button
                         onClick={scrollToForm}
-                        className="cursor-pointer p-3 rounded-full bg-blue-600/20 hover:bg-blue-600/30 transition-colors"
+                        className="cursor-pointer p-3 rounded-full bg-blue-600/20 dark:bg-purple-600/20 hover:bg-blue-600/30 dark:hover:bg-purple-600/30 transition-colors"
                         whileHover={{ scale: 1.2 }}
                         whileTap={{ scale: 0.9 }}
                         aria-label="Przejdź do następnej sekcji"
                     >
-                        <ArrowDown className="w-6 h-6 text-blue-600" />
+                        <ArrowDown className="w-6 h-6 text-blue-600 dark:text-purple-400" />
                     </motion.button>
                 </motion.div>
             </section>
 
             {/* Contact Form and Map Section */}
-            <section ref={formRef} className="py-20 md:py-32 bg-white relative">
+            <section ref={formRef} className="py-20 md:py-32 bg-white dark:bg-gray-900 relative">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -336,9 +389,9 @@ const Contact = () => {
                         transition={{ duration: 0.6 }}
                         className="text-center mb-12"
                     >
-                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Napisz do nas</h2>
-                        <p className="text-xl text-gray-600">Wypełnij formularz, a skontaktujemy się z Tobą</p>
-                        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto mt-6 rounded-full"></div>
+                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4">Napisz do nas</h2>
+                        <p className="text-xl text-gray-600 dark:text-gray-300">Wypełnij formularz, a skontaktujemy się z Tobą</p>
+                        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 dark:from-purple-500 to-cyan-500 dark:to-purple-400 mx-auto mt-6 rounded-full"></div>
                     </motion.div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
@@ -349,31 +402,14 @@ const Contact = () => {
                             transition={{ duration: 0.6, delay: 0.2 }}
                             className="order-2 lg:order-1 flex flex-col"
                         >
-                            <div className="rounded-3xl overflow-hidden shadow-2xl border-2 border-gray-200 flex-1 min-h-[500px] lg:min-h-0">
-                                <MapContainer
-                                    center={position}
-                                    zoom={20}
-                                    style={{ height: '100%', width: '100%' }}
-                                    className="z-0"
-                                >
-                                    <TileLayer
-                                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                    />
-                                    <Marker position={position}>
-                                        <Popup>
-                                            <div className="text-center">
-                                                <strong>TES - Biuro Rachunkowe</strong>
-                                                <br />
-                                                ul. Stefana Żeromskiego 7/9
-                                                <br />
-                                                98-220 Zduńska Wola
-                                                <br />
-                                                <small>(Wejście od ul. Przejazd)</small>
-                                            </div>
-                                        </Popup>
-                                    </Marker>
-                                </MapContainer>
+                            <div className="rounded-3xl overflow-hidden shadow-2xl border-2 border-gray-200 dark:border-gray-700 flex-1 min-h-[500px] lg:min-h-0">
+                                <Suspense fallback={
+                                    <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800">
+                                        <div className="w-12 h-12 border-4 border-blue-600 dark:border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+                                    </div>
+                                }>
+                                    <LeafletMap position={position} />
+                                </Suspense>
                             </div>
                         </motion.div>
 
@@ -384,11 +420,11 @@ const Contact = () => {
                             transition={{ duration: 0.6, delay: 0.2 }}
                             className="order-1 lg:order-2"
                         >
-                            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-3xl p-8 md:p-12 shadow-xl border-2 border-gray-100 h-full">
+                            <div className="bg-gradient-to-br from-blue-50 dark:from-purple-900/30 to-cyan-50 dark:to-purple-800/30 rounded-3xl p-8 md:p-12 shadow-xl border-2 border-gray-100 dark:border-gray-700 h-full">
                                 <form ref={form} onSubmit={handleSubmit} className="space-y-6">
                                     {/* Name Field */}
                                     <div>
-                                        <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+                                        <label htmlFor="name" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                                             Twoje Imię
                                         </label>
                                         <input
@@ -398,7 +434,7 @@ const Contact = () => {
                                             value={formData.name}
                                             onChange={handleInputChange}
                                             required
-                                            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 outline-none bg-white"
+                                            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-blue-500 dark:focus:border-purple-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-purple-200 transition-all duration-300 outline-none bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                                             placeholder="Wprowadź swoje imię"
                                         />
                                     </div>
@@ -415,14 +451,14 @@ const Contact = () => {
                                             value={formData.email}
                                             onChange={handleInputChange}
                                             required
-                                            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 outline-none bg-white"
+                                            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-blue-500 dark:focus:border-purple-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-purple-200 transition-all duration-300 outline-none bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                                             placeholder="twoj@email.pl"
                                         />
                                     </div>
 
                                     {/* Message Field */}
                                     <div>
-                                        <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
+                                        <label htmlFor="message" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                                             Twoja wiadomość
                                         </label>
                                         <textarea
@@ -432,7 +468,7 @@ const Contact = () => {
                                             onChange={handleInputChange}
                                             required
                                             rows={6}
-                                            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 outline-none resize-none bg-white"
+                                            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-blue-500 dark:focus:border-purple-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-purple-200 transition-all duration-300 outline-none resize-none bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                                             placeholder="Napisz swoją wiadomość..."
                                         />
                                     </div>
@@ -441,7 +477,7 @@ const Contact = () => {
                                     <motion.button
                                         type="submit"
                                         disabled={formStatus === 'sending'}
-                                        className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 dark:from-purple-600 to-cyan-500 dark:to-purple-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                                         whileHover={{ scale: formStatus === 'sending' ? 1 : 1.02 }}
                                         whileTap={{ scale: formStatus === 'sending' ? 1 : 0.98 }}
                                     >
@@ -492,7 +528,7 @@ const Contact = () => {
                                         <motion.div
                                             initial={{ opacity: 0, y: -10 }}
                                             animate={{ opacity: 1, y: 0 }}
-                                            className="text-center text-red-600 font-medium bg-red-50 border-2 border-red-200 rounded-xl p-4"
+                                            className="text-center text-red-600 dark:text-red-400 font-medium bg-red-50 dark:bg-red-900/20 border-2 border-red-200 dark:border-red-800 rounded-xl p-4"
                                         >
                                             {errorMessage}
                                         </motion.div>

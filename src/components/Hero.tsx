@@ -10,12 +10,13 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-x-hidden overflow-y-auto bg-gradient-to-br from-blue-50 via-white to-cyan-50"
+      className="relative min-h-screen flex items-center justify-center overflow-x-hidden overflow-y-auto bg-gradient-to-br from-blue-50 dark:from-gray-900 via-white dark:via-gray-900 to-cyan-50 dark:to-gray-900"
     >
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
-          className="absolute top-20 left-10 w-48 h-48 md:w-72 md:h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-30"
+          className="absolute top-20 left-10 w-48 h-48 md:w-72 md:h-72 bg-blue-200 dark:bg-purple-600 rounded-full mix-blend-multiply filter blur-xl opacity-30 dark:opacity-20"
+          style={{ willChange: 'transform' }}
           animate={{
             scale: [1, 1.2, 1],
             x: [0, 100, 0],
@@ -25,10 +26,12 @@ const Hero = () => {
             duration: 20,
             repeat: Infinity,
             ease: 'easeInOut',
+            type: 'tween',
           }}
         />
         <motion.div
-          className="absolute top-40 right-10 w-48 h-48 md:w-72 md:h-72 bg-cyan-200 rounded-full mix-blend-multiply filter blur-xl opacity-30"
+          className="absolute top-40 right-10 w-48 h-48 md:w-72 md:h-72 bg-cyan-200 dark:bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-30 dark:opacity-20"
+          style={{ willChange: 'transform' }}
           animate={{
             scale: [1, 1.3, 1],
             x: [0, -100, 0],
@@ -38,10 +41,12 @@ const Hero = () => {
             duration: 25,
             repeat: Infinity,
             ease: 'easeInOut',
+            type: 'tween',
           }}
         />
         <motion.div
           className="absolute -bottom-32 left-1/2 w-48 h-48 md:w-72 md:h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-30"
+          style={{ willChange: 'transform' }}
           animate={{
             scale: [1, 1.1, 1],
             x: [0, 50, 0],
@@ -51,6 +56,7 @@ const Hero = () => {
             duration: 30,
             repeat: Infinity,
             ease: 'easeInOut',
+            type: 'tween',
           }}
         />
       </div>
@@ -68,28 +74,38 @@ const Hero = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-600 dark:from-purple-600 via-blue-500 dark:via-purple-500 to-cyan-500 dark:to-purple-400 bg-clip-text text-transparent block mb-2">
               TES
+            </span>
+            <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-gray-800 dark:text-gray-200 block">
+              Biuro rachunkowe w Zduńskiej Woli
             </span>
           </motion.h1>
 
-          <motion.p
+          {/* <motion.p
             className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-800 mb-4 px-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             TWOJE BIURO RACHUNKOWE
-          </motion.p>
+          </motion.p> */}
 
           <motion.p
-            className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed px-4"
+            className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed px-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            Profesjonalna obsługa i dbałość o Twoje finanse idą w parze! Zaufaj nam,
-            byś mógł skupić się na tym, co naprawdę ważne - rozwijaniu swojego biznesu.
+            Profesjonalna księgowa w Zduńskiej Woli. Obsługa i dbałość o Twoje.
+          </motion.p>
+          <motion.p
+            className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed px-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            Zaufaj nam, byś mógł skupić się na rozwijaniu swojego biznesu.
           </motion.p>
 
           {/* <motion.div
@@ -129,7 +145,7 @@ const Hero = () => {
           className="cursor-pointer"
           whileHover={{ scale: 1.2 }}
         >
-          <ArrowDown className="w-8 h-8 text-blue-600" />
+          <ArrowDown className="w-8 h-8 text-blue-600 dark:text-purple-400" />
         </motion.div>
       </motion.div>
     </section>

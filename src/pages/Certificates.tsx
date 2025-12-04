@@ -2,6 +2,7 @@ import { AnimatePresence, motion, useInView } from 'framer-motion'
 import { ArrowDown, Award, X, ZoomIn } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import StructuredData from '../components/StructuredData'
 
 // Import certyfikatów
 import cert1 from '../assets/images/cert1.jpg'
@@ -12,6 +13,7 @@ import cert5 from '../assets/images/cert5.jpg'
 import cert6 from '../assets/images/cert6.jpg'
 import cert7 from '../assets/images/cert7.png'
 import cert8 from '../assets/images/cert8.jpg'
+import cert9 from '../assets/images/cert9.jpg'
 
 interface Certificate {
     id: number
@@ -69,6 +71,12 @@ const certificates: Certificate[] = [
         title: 'Seminarium - Akcja edukacyjna BILANS 2011',
         alt: 'Seminarium - Akcja edukacyjna BILANS 2011 - Elżbieta Stawska',
     },
+    {
+        id: 9,
+        image: cert9,
+        title: 'Certyfikat - Cyfrowy Księgowy',
+        alt: 'Certyfikat - Cyfrowy Księgowy - Elżbieta Stawska',
+    }
 ]
 
 const Certificates = () => {
@@ -118,11 +126,12 @@ const Certificates = () => {
     }, [selectedCertificate])
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white dark:bg-gray-900">
+            <StructuredData />
             {/* Hero Header */}
             <section
                 ref={headerRef}
-                className="relative py-32 md:py-40 bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 overflow-x-hidden overflow-y-auto"
+                className="relative py-32 md:py-40 bg-gradient-to-br from-blue-600 dark:from-purple-700 via-blue-500 dark:via-purple-600 to-cyan-500 dark:to-purple-500 overflow-x-hidden overflow-y-auto"
             >
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-10">
@@ -208,7 +217,7 @@ const Certificates = () => {
                 >
                     <motion.button
                         onClick={scrollToIntro}
-                        className="cursor-pointer p-3 rounded-full bg-white/20 backdrop-blur-md hover:bg-white/30 transition-colors"
+                        className="cursor-pointer p-3 rounded-full bg-white/20 dark:bg-white/10 backdrop-blur-md hover:bg-white/30 dark:hover:bg-white/20 transition-colors"
                         whileHover={{ scale: 1.2 }}
                         whileTap={{ scale: 0.9 }}
                         aria-label="Przejdź do następnej sekcji"
@@ -219,7 +228,7 @@ const Certificates = () => {
             </section>
 
             {/* Introduction Section */}
-            <section ref={introRef} className="py-20 md:py-32 bg-gradient-to-br from-blue-50 to-white relative">
+            <section ref={introRef} className="py-20 md:py-32 bg-gradient-to-br from-blue-50 dark:from-gray-800 to-white dark:to-gray-900 relative">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -227,19 +236,19 @@ const Certificates = () => {
                         transition={{ duration: 0.6 }}
                         className="text-center mb-12"
                     >
-                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6">
                             Nasze kwalifikacje i certyfikaty
                         </h2>
-                        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto mb-8 rounded-full"></div>
+                        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 dark:from-purple-500 to-cyan-500 dark:to-purple-400 mx-auto mb-8 rounded-full"></div>
                     </motion.div>
 
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={isIntroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100"
+                        className="bg-white dark:bg-gray-800 rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 dark:border-gray-700"
                     >
-                        <p className="text-lg md:text-xl text-gray-700 leading-relaxed text-center">
+                        <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed text-center">
                             Nasze biuro posiada wiele ukończonych certyfikatów, kursów oraz seminariów, które
                             uprawniają nas do usługowego prowadzenia ksiąg rachunkowych. Umożliwiają one również
                             profesjonalną pracę w ogólnym obszarze rachunkowości i finansów, zgodnie z
@@ -258,18 +267,18 @@ const Certificates = () => {
                 >
                     <motion.button
                         onClick={scrollToGallery}
-                        className="cursor-pointer p-3 rounded-full bg-blue-600/20 hover:bg-blue-600/30 transition-colors"
+                        className="cursor-pointer p-3 rounded-full bg-blue-600/20 dark:bg-purple-600/20 hover:bg-blue-600/30 dark:hover:bg-purple-600/30 transition-colors"
                         whileHover={{ scale: 1.2 }}
                         whileTap={{ scale: 0.9 }}
                         aria-label="Przejdź do następnej sekcji"
                     >
-                        <ArrowDown className="w-6 h-6 text-blue-600" />
+                        <ArrowDown className="w-6 h-6 text-blue-600 dark:text-purple-400" />
                     </motion.button>
                 </motion.div>
             </section>
 
             {/* Gallery Section */}
-            <section ref={galleryRef} className="py-20 md:py-32 bg-white relative">
+            <section ref={galleryRef} className="py-20 md:py-32 bg-white dark:bg-gray-900 relative">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -277,9 +286,9 @@ const Certificates = () => {
                         transition={{ duration: 0.6 }}
                         className="text-center mb-16"
                     >
-                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Nasze certyfikaty</h2>
-                        <p className="text-xl text-gray-600">Kliknij na certyfikat, aby go powiększyć</p>
-                        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto mt-6 rounded-full"></div>
+                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4">Nasze certyfikaty</h2>
+                        <p className="text-xl text-gray-600 dark:text-gray-300">Kliknij na certyfikat, aby go powiększyć</p>
+                        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 dark:from-purple-500 to-cyan-500 dark:to-purple-400 mx-auto mt-6 rounded-full"></div>
                     </motion.div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -291,12 +300,16 @@ const Certificates = () => {
                                 transition={{ duration: 0.6, delay: index * 0.1 }}
                                 className="group relative"
                             >
-                                <div className="relative overflow-hidden rounded-2xl bg-white shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 border-gray-100 hover:border-blue-300">
+                                <div className="relative overflow-hidden rounded-2xl bg-white dark:bg-gray-800 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 border-gray-100 dark:border-gray-700 hover:border-blue-300 dark:hover:border-purple-500">
                                     <div className="aspect-[3/4] relative">
                                         <img
                                             src={certificate.image}
                                             alt={certificate.alt}
                                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                            loading="lazy"
+                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                                            width="300"
+                                            height="400"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4">
                                             <div className="text-white text-center">
@@ -306,7 +319,7 @@ const Certificates = () => {
                                         </div>
                                     </div>
                                     <div className="p-4">
-                                        <h3 className="text-sm font-semibold text-gray-800 line-clamp-2">
+                                        <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 line-clamp-2">
                                             {certificate.title}
                                         </h3>
                                     </div>
@@ -323,7 +336,7 @@ const Certificates = () => {
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 md:py-32 bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500">
+            <section className="py-20 md:py-32 bg-gradient-to-br from-blue-600 dark:from-purple-700 via-blue-500 dark:via-purple-600 to-cyan-500 dark:to-purple-500">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -342,7 +355,7 @@ const Certificates = () => {
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                             <Link
                                 to="/contact"
-                                className="inline-block px-8 py-4 bg-white text-blue-600 font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                                className="inline-block px-8 py-4 bg-white dark:bg-gray-800 text-blue-600 dark:text-purple-400 font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
                             >
                                 Skontaktuj się z nami
                             </Link>
@@ -377,16 +390,18 @@ const Certificates = () => {
                                 >
                                     <X className="w-8 h-8" />
                                 </button>
-                                <div className="bg-white rounded-2xl overflow-hidden shadow-2xl">
+                                <div className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-2xl">
                                     <div className="max-h-[85vh] overflow-y-auto">
                                         <img
                                             src={selectedCertificate.image}
                                             alt={selectedCertificate.alt}
                                             className="w-full h-auto"
+                                            loading="lazy"
+                                            sizes="(max-width: 768px) 100vw, 80vw"
                                         />
                                     </div>
-                                    <div className="p-6 bg-white border-t border-gray-200">
-                                        <h3 className="text-xl font-bold text-gray-900 text-center">
+                                    <div className="p-6 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+                                        <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 text-center">
                                             {selectedCertificate.title}
                                         </h3>
                                     </div>

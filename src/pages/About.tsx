@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import React, { useRef } from 'react'
 import { Link } from 'react-router-dom'
+import StructuredData from '../components/StructuredData'
 
 interface AboutSection {
   icon: React.ComponentType<{ className?: string }>
@@ -25,7 +26,7 @@ interface AboutSection {
 const aboutSections: AboutSection[] = [
   {
     icon: Award,
-    title: 'Ponad 20 Lat Doświadczenia w Branży Księgowej',
+    title: 'Ponad 25 Lat Doświadczenia w Branży Księgowej',
     description: 'Witamy w naszym biurze rachunkowym, sercu finansowej precyzji w Zduńskiej Woli. Od ponad dwóch dekad jesteśmy zaufanym partnerem dla przedsiębiorstw z całej Polski i indywidualnych klientów, dostarczając usługi księgowe na najwyższym poziomie.',
     align: 'left',
     color: 'blue',
@@ -61,8 +62,8 @@ const aboutSections: AboutSection[] = [
 ]
 
 const stats = [
-  { icon: Clock, value: '20+', label: 'Lat Doświadczenia' },
-  { icon: Users, value: '500+', label: 'Zadowolonych Klientów' },
+  { icon: Clock, value: '25+', label: 'Lat Doświadczenia' },
+  { icon: Users, value: '200+', label: 'Zadowolonych Klientów' },
   { icon: Target, value: '100%', label: 'Dokładność' },
   { icon: Shield, value: '24/7', label: 'Wsparcie' },
 ]
@@ -83,18 +84,18 @@ const AboutSectionCard = ({ section, index }: { section: AboutSection; index: nu
     >
       {/* Content */}
       <div className={`flex-1 p-8 md:p-12 rounded-3xl ${section.color === 'blue'
-        ? 'bg-gradient-to-br from-blue-600 to-cyan-500 text-white'
-        : 'bg-gray-50 text-gray-900 border-2 border-gray-200'
+        ? 'bg-gradient-to-br from-blue-600 dark:from-purple-700 to-cyan-500 dark:to-purple-500 text-white'
+        : 'bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-2 border-gray-200 dark:border-gray-700'
         } shadow-xl`}>
         <motion.div
-          className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6"
-          style={{
-            backgroundColor: section.color === 'blue' ? 'rgba(255,255,255,0.2)' : 'rgba(59, 130, 246, 0.1)',
-          }}
+          className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6 ${section.color === 'blue'
+            ? 'bg-white/20'
+            : 'bg-blue-100 dark:bg-purple-900/30'
+            }`}
           whileHover={{ scale: 1.1, rotate: 5 }}
           transition={{ type: 'spring', stiffness: 300 }}
         >
-          <Icon className={`w-8 h-8 ${section.color === 'blue' ? 'text-white' : 'text-blue-600'}`} />
+          <Icon className={`w-8 h-8 ${section.color === 'blue' ? 'text-white' : 'text-blue-600 dark:text-purple-400'}`} />
         </motion.div>
 
         <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -115,9 +116,9 @@ const AboutSectionCard = ({ section, index }: { section: AboutSection; index: nu
       >
         <div
           className={`w-full h-64 rounded-3xl ${section.color === 'blue'
-            ? 'bg-gradient-to-br from-blue-200 to-cyan-200'
-            : 'bg-gradient-to-br from-blue-500 to-cyan-500'
-            } opacity-20 blur-3xl`}
+            ? 'bg-gradient-to-br from-blue-200 dark:from-purple-600 to-cyan-200 dark:to-purple-400'
+            : 'bg-gradient-to-br from-blue-500 dark:from-purple-600 to-cyan-500 dark:to-purple-500'
+            } opacity-20 dark:opacity-30 blur-3xl`}
         ></div>
       </motion.div>
     </motion.div>
@@ -140,11 +141,12 @@ const About = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
+      <StructuredData />
       {/* Hero Header */}
       <section
         ref={headerRef}
-        className="relative py-32 md:py-40 bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 overflow-x-hidden overflow-y-auto"
+        className="relative py-32 md:py-40 bg-gradient-to-br from-blue-600 dark:from-purple-700 via-blue-500 dark:via-purple-600 to-cyan-500 dark:to-purple-500 overflow-x-hidden overflow-y-auto"
       >
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
@@ -191,7 +193,7 @@ const About = () => {
               animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              Twoje zaufane biuro rachunkowe z ponad 20-letnim doświadczeniem
+              Twoje zaufane biuro rachunkowe z ponad 25-letnim doświadczeniem
             </motion.p>
           </motion.div>
         </div>
@@ -243,7 +245,7 @@ const About = () => {
       {/* Stats Section */}
       <section
         ref={statsRef}
-        className="py-16 md:py-24 bg-gradient-to-br from-gray-50 to-white relative"
+        className="py-16 md:py-24 bg-gradient-to-br from-gray-50 dark:from-gray-800 to-white dark:to-gray-900 relative"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -258,21 +260,21 @@ const About = () => {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                 >
                   <motion.div
-                    className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 text-white mb-4 shadow-lg"
+                    className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 dark:from-purple-500 to-cyan-500 dark:to-purple-400 text-white mb-4 shadow-lg"
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     transition={{ type: 'spring', stiffness: 300 }}
                   >
                     <StatIcon className="w-8 h-8" />
                   </motion.div>
                   <motion.div
-                    className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent mb-2"
+                    className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 dark:from-purple-600 to-cyan-500 dark:to-purple-400 bg-clip-text text-transparent mb-2"
                     initial={{ scale: 0 }}
                     animate={isStatsInView ? { scale: 1 } : { scale: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 + 0.2, type: 'spring' }}
                   >
                     {stat.value}
                   </motion.div>
-                  <p className="text-gray-600 font-medium">{stat.label}</p>
+                  <p className="text-gray-600 dark:text-gray-300 font-medium">{stat.label}</p>
                 </motion.div>
               )
             })}
@@ -287,18 +289,18 @@ const About = () => {
         >
           <motion.button
             onClick={scrollToContent}
-            className="cursor-pointer p-3 rounded-full bg-blue-600/20 hover:bg-blue-600/30 transition-colors"
+            className="cursor-pointer p-3 rounded-full bg-blue-600/20 dark:bg-purple-600/20 hover:bg-blue-600/30 dark:hover:bg-purple-600/30 transition-colors"
             whileHover={{ scale: 1.2 }}
             whileTap={{ scale: 0.9 }}
             aria-label="Przejdź do następnej sekcji"
           >
-            <ArrowDown className="w-6 h-6 text-blue-600" />
+            <ArrowDown className="w-6 h-6 text-blue-600 dark:text-purple-400" />
           </motion.button>
         </motion.div>
       </section>
 
       {/* Main Content Sections */}
-      <section ref={contentRef} className="py-20 md:py-32 bg-white">
+      <section ref={contentRef} className="py-20 md:py-32 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {aboutSections.map((section, index) => (
             <AboutSectionCard key={index} section={section} index={index} />
@@ -307,7 +309,7 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500">
+      <section className="py-20 md:py-32 bg-gradient-to-br from-blue-600 dark:from-purple-700 via-blue-500 dark:via-purple-600 to-cyan-500 dark:to-purple-500">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -329,7 +331,7 @@ const About = () => {
             >
               <Link
                 to="/contact"
-                className="inline-block px-8 py-4 bg-white text-blue-600 font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                className="inline-block px-8 py-4 bg-white dark:bg-gray-800 text-blue-600 dark:text-purple-400 font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 Skontaktuj się z nami
               </Link>

@@ -14,6 +14,7 @@ import {
 } from 'lucide-react'
 import React, { useRef } from 'react'
 import { Link } from 'react-router-dom'
+import StructuredData from '../components/StructuredData'
 
 interface Service {
     icon: React.ComponentType<{ className?: string }>
@@ -81,11 +82,12 @@ const Offer = () => {
     }
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white dark:bg-gray-900">
+            <StructuredData />
             {/* Hero Header */}
             <section
                 ref={headerRef}
-                className="relative py-32 md:py-40 bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 overflow-x-hidden overflow-y-auto"
+                className="relative py-32 md:py-40 bg-gradient-to-br from-blue-600 dark:from-purple-700 via-blue-500 dark:via-purple-600 to-cyan-500 dark:to-purple-500 overflow-x-hidden overflow-y-auto"
             >
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-10">
@@ -171,7 +173,7 @@ const Offer = () => {
                 >
                     <motion.button
                         onClick={scrollToIntro}
-                        className="cursor-pointer p-3 rounded-full bg-white/20 backdrop-blur-md hover:bg-white/30 transition-colors"
+                        className="cursor-pointer p-3 rounded-full bg-white/20 dark:bg-white/10 backdrop-blur-md hover:bg-white/30 dark:hover:bg-white/20 transition-colors"
                         whileHover={{ scale: 1.2 }}
                         whileTap={{ scale: 0.9 }}
                         aria-label="Przejdź do następnej sekcji"
@@ -184,7 +186,7 @@ const Offer = () => {
             {/* Introduction Section */}
             <section
                 ref={introRef}
-                className="py-20 md:py-32 bg-gradient-to-br from-blue-50 to-white relative"
+                className="py-20 md:py-32 bg-gradient-to-br from-blue-50 dark:from-gray-800 to-white dark:to-gray-900 relative"
             >
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
@@ -193,19 +195,19 @@ const Offer = () => {
                         transition={{ duration: 0.6 }}
                         className="text-center mb-12"
                     >
-                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6">
                             Kompleksowa obsługa księgowa
                         </h2>
-                        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto mb-8 rounded-full"></div>
+                        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 dark:from-purple-500 to-cyan-500 dark:to-purple-400 mx-auto mb-8 rounded-full"></div>
                     </motion.div>
 
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={isIntroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100"
+                        className="bg-white dark:bg-gray-800 rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 dark:border-gray-700"
                     >
-                        <p className="text-lg md:text-xl text-gray-700 leading-relaxed text-center">
+                        <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed text-center">
                             Nasze biuro rachunkowe oferuje kompleksową obsługę księgową dla firm, obejmującą
                             prowadzenie ksiąg, rozliczenia podatkowe oraz wsparcie w tworzeniu strategii finansowych.
                             Zapewniając profesjonalizm, dokładność i terminowość, pomaga przedsiębiorstwom skupić
@@ -222,12 +224,12 @@ const Offer = () => {
                 >
                     <motion.button
                         onClick={scrollToServices}
-                        className="cursor-pointer p-3 rounded-full bg-blue-600/20 hover:bg-blue-600/30 transition-colors"
+                        className="cursor-pointer p-3 rounded-full bg-blue-600/20 dark:bg-purple-600/20 hover:bg-blue-600/30 dark:hover:bg-purple-600/30 transition-colors"
                         whileHover={{ scale: 1.2 }}
                         whileTap={{ scale: 0.9 }}
                         aria-label="Przejdź do następnej sekcji"
                     >
-                        <ArrowDown className="w-6 h-6 text-blue-600" />
+                        <ArrowDown className="w-6 h-6 text-blue-600 dark:text-purple-400" />
                     </motion.button>
                 </motion.div>
             </section>
@@ -235,7 +237,7 @@ const Offer = () => {
             {/* Services Section */}
             <section
                 ref={servicesRef}
-                className="py-20 md:py-32 bg-white relative"
+                className="py-20 md:py-32 bg-white dark:bg-gray-900 relative"
             >
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
@@ -244,13 +246,13 @@ const Offer = () => {
                         transition={{ duration: 0.6 }}
                         className="text-center mb-16"
                     >
-                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                             Nasze usługi
                         </h2>
-                        <p className="text-xl text-gray-600">
+                        <p className="text-xl text-gray-600 dark:text-gray-300">
                             Zajmujemy się prowadzeniem
                         </p>
-                        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto mt-6 rounded-full"></div>
+                        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 dark:from-purple-500 to-cyan-500 dark:to-purple-400 mx-auto mt-6 rounded-full"></div>
                     </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -264,25 +266,25 @@ const Offer = () => {
                                     transition={{ duration: 0.6, delay: index * 0.1 }}
                                     className="group relative"
                                 >
-                                    <div className="h-full bg-gradient-to-br from-blue-50 to-cyan-50 rounded-3xl p-8 border-2 border-transparent hover:border-blue-200 transition-all duration-300 shadow-lg hover:shadow-2xl">
+                                    <div className="h-full bg-gradient-to-br from-blue-50 dark:from-purple-900/30 to-cyan-50 dark:to-purple-800/30 rounded-3xl p-8 border-2 border-transparent hover:border-blue-200 dark:hover:border-purple-600 transition-all duration-300 shadow-lg hover:shadow-2xl">
                                         <motion.div
-                                            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 text-white mb-6 shadow-lg"
+                                            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 dark:from-purple-500 to-cyan-500 dark:to-purple-400 text-white mb-6 shadow-lg"
                                             whileHover={{ scale: 1.1, rotate: 5 }}
                                             transition={{ type: 'spring', stiffness: 300 }}
                                         >
                                             <Icon className="w-8 h-8" />
                                         </motion.div>
 
-                                        <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                                        <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                                             {service.title}
                                         </h3>
 
-                                        <p className="text-lg text-gray-600 leading-relaxed">
+                                        <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
                                             {service.description}
                                         </p>
 
                                         {/* Decorative element */}
-                                        <div className="absolute top-4 right-4 w-32 h-32 bg-gradient-to-br from-blue-200 to-cyan-200 rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
+                                        <div className="absolute top-4 right-4 w-32 h-32 bg-gradient-to-br from-blue-200 dark:from-purple-600 to-cyan-200 dark:to-purple-500 rounded-full blur-3xl opacity-20 dark:opacity-30 group-hover:opacity-30 dark:group-hover:opacity-40 transition-opacity"></div>
                                     </div>
                                 </motion.div>
                             )
@@ -298,12 +300,12 @@ const Offer = () => {
                 >
                     <motion.button
                         onClick={scrollToClients}
-                        className="cursor-pointer p-3 rounded-full bg-blue-600/20 hover:bg-blue-600/30 transition-colors"
+                        className="cursor-pointer p-3 rounded-full bg-blue-600/20 dark:bg-purple-600/20 hover:bg-blue-600/30 dark:hover:bg-purple-600/30 transition-colors"
                         whileHover={{ scale: 1.2 }}
                         whileTap={{ scale: 0.9 }}
                         aria-label="Przejdź do następnej sekcji"
                     >
-                        <ArrowDown className="w-6 h-6 text-blue-600" />
+                        <ArrowDown className="w-6 h-6 text-blue-600 dark:text-purple-400" />
                     </motion.button>
                 </motion.div>
             </section>
@@ -311,7 +313,7 @@ const Offer = () => {
             {/* Client Types Section */}
             <section
                 ref={clientsRef}
-                className="py-20 md:py-32 bg-gradient-to-br from-gray-50 to-white relative"
+                className="py-20 md:py-32 bg-gradient-to-br from-gray-50 dark:from-gray-800 to-white dark:to-gray-900 relative"
             >
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
@@ -320,13 +322,13 @@ const Offer = () => {
                         transition={{ duration: 0.6 }}
                         className="text-center mb-16"
                     >
-                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                             Obsługujemy różne podmioty
                         </h2>
-                        <p className="text-xl text-gray-600 mb-2">
+                        <p className="text-xl text-gray-600 dark:text-gray-300 mb-2">
                             Nasza oferta obejmuje usługi księgowe dla:
                         </p>
-                        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto mt-6 rounded-full"></div>
+                        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 dark:from-purple-500 to-cyan-500 dark:to-purple-400 mx-auto mt-6 rounded-full"></div>
                     </motion.div>
 
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
@@ -340,15 +342,15 @@ const Offer = () => {
                                     transition={{ duration: 0.4, delay: index * 0.05 }}
                                     className="group"
                                 >
-                                    <div className="bg-white rounded-2xl p-6 text-center border-2 border-gray-100 hover:border-blue-300 transition-all duration-300 shadow-md hover:shadow-xl h-full flex flex-col items-center justify-center">
+                                    <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 text-center border-2 border-gray-100 dark:border-gray-700 hover:border-blue-300 dark:hover:border-purple-500 transition-all duration-300 shadow-md hover:shadow-xl h-full flex flex-col items-center justify-center">
                                         <motion.div
-                                            className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 text-white mb-4 flex items-center justify-center"
+                                            className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 dark:from-purple-500 to-cyan-500 dark:to-purple-400 text-white mb-4 flex items-center justify-center"
                                             whileHover={{ scale: 1.1, rotate: 5 }}
                                             transition={{ type: 'spring', stiffness: 300 }}
                                         >
                                             <Icon className="w-6 h-6" />
                                         </motion.div>
-                                        <p className="text-sm md:text-base font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
+                                        <p className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-purple-400 transition-colors">
                                             {clientType.name}
                                         </p>
                                     </div>
@@ -362,7 +364,7 @@ const Offer = () => {
                         initial={{ opacity: 0, y: 30 }}
                         animate={isClientsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                         transition={{ duration: 0.6, delay: 0.5 }}
-                        className="mt-12 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-3xl p-8 md:p-12 text-white shadow-2xl"
+                        className="mt-12 bg-gradient-to-br from-blue-600 dark:from-purple-700 to-cyan-500 dark:to-purple-500 rounded-3xl p-8 md:p-12 text-white shadow-2xl"
                     >
                         <div className="max-w-3xl mx-auto">
                             <div className="flex items-start gap-4 mb-4">
@@ -384,7 +386,7 @@ const Offer = () => {
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 md:py-32 bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500">
+            <section className="py-20 md:py-32 bg-gradient-to-br from-blue-600 dark:from-purple-700 via-blue-500 dark:via-purple-600 to-cyan-500 dark:to-purple-500">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -406,7 +408,7 @@ const Offer = () => {
                         >
                             <Link
                                 to="/contact"
-                                className="inline-block px-8 py-4 bg-white text-blue-600 font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                                className="inline-block px-8 py-4 bg-white dark:bg-gray-800 text-blue-600 dark:text-purple-400 font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
                             >
                                 Skontaktuj się z nami
                             </Link>

@@ -14,7 +14,7 @@ const features: Feature[] = [
   {
     icon: User,
     title: 'Indywidualne podejście do klienta',
-    description: 'Zaufaj naszej firmie i wypróbuj usługi, a przekonasz się, że Twoje dokumenty są w dobrych rękach.',
+    description: 'Zaufaj naszemu biuru rachunkowemu w Zduńskiej Woli i wypróbuj usługi, a przekonasz się, że Twoje dokumenty są w dobrych rękach doświadczonej księgowej.',
     image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800',
     align: 'left',
   },
@@ -66,23 +66,23 @@ const FeatureCard = ({ feature, index }: FeatureCardProps) => {
       {/* Content */}
       <div className="flex-1 space-y-6">
         <motion.div
-          className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 text-white shadow-lg"
+          className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 dark:from-purple-500 to-cyan-500 dark:to-purple-400 text-white shadow-lg"
           whileHover={{ scale: 1.1, rotate: 5 }}
           transition={{ type: 'spring', stiffness: 300 }}
         >
           <Icon className="w-8 h-8" />
         </motion.div>
 
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100">
           {feature.title}
         </h2>
 
-        <p className="text-lg text-gray-600 leading-relaxed">
+        <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
           {feature.description}
         </p>
 
         {/* Decorative line */}
-        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full"></div>
+        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 dark:from-purple-500 to-cyan-500 dark:to-purple-400 rounded-full"></div>
       </div>
 
       {/* Image */}
@@ -98,11 +98,16 @@ const FeatureCard = ({ feature, index }: FeatureCardProps) => {
             alt={feature.title}
             className="w-full h-[300px] md:h-[400px] object-cover"
             loading="lazy"
+            decoding="async"
+            sizes="(max-width: 768px) 100vw, 50vw"
+            width="800"
+            height="400"
+            fetchPriority={index === 0 ? "high" : "low"}
           />
         </div>
         {/* Decorative element */}
         <div
-          className={`absolute -z-10 w-32 h-32 md:w-64 md:h-64 bg-gradient-to-br from-blue-200 to-cyan-200 rounded-full blur-3xl opacity-50 ${
+          className={`absolute -z-10 w-32 h-32 md:w-64 md:h-64 bg-gradient-to-br from-blue-200 dark:from-purple-600 to-cyan-200 dark:to-purple-500 rounded-full blur-3xl opacity-50 dark:opacity-30 ${
             feature.align === 'left' ? '-left-8 md:-left-16 -top-8 md:-top-16' : '-right-8 md:-right-16 -bottom-8 md:-bottom-16'
           }`}
         ></div>
@@ -113,7 +118,7 @@ const FeatureCard = ({ feature, index }: FeatureCardProps) => {
 
 const Features = () => {
   return (
-    <section className="py-20 md:py-32 bg-white">
+    <section className="py-20 md:py-32 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {features.map((feature, index) => (
           <FeatureCard key={index} feature={feature} index={index} />
